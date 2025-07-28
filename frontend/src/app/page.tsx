@@ -1,103 +1,180 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import { Users, Activity, Database, TrendingUp } from 'lucide-react'
+import StatsCard from '@/components/dashboard/StatsCard'
+import RecentActivity from '@/components/dashboard/RecentActivity'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { motion } from 'framer-motion'
+
+const stats = [
+  {
+    title: 'Total Users',
+    value: '2,847',
+    change: '+12% from last month',
+    changeType: 'positive' as const,
+    icon: Users
+  },
+  {
+    title: 'Active Sessions',
+    value: '1,234',
+    change: '+5% from last hour',
+    changeType: 'positive' as const,
+    icon: Activity
+  },
+  {
+    title: 'Database Size',
+    value: '45.2 GB',
+    change: '+2.1 GB this week',
+    changeType: 'neutral' as const,
+    icon: Database
+  },
+  {
+    title: 'Performance',
+    value: '99.9%',
+    change: 'Uptime this month',
+    changeType: 'positive' as const,
+    icon: TrendingUp
+  }
+]
+
+export default function Dashboard() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="space-y-8">
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+        <p className="text-muted-foreground mt-2">
+          Welcome back! Here's what's happening with your application.
+        </p>
+      </motion.div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      {/* Stats Grid */}
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {stats.map((stat, index) => (
+          <StatsCard key={stat.title} {...stat} index={index} />
+        ))}
+      </div>
+
+      {/* Main Content Grid */}
+      <div className="grid gap-6 lg:grid-cols-3">
+        {/* Chart Placeholder */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="lg:col-span-2"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          <Card>
+            <CardHeader>
+              <CardTitle>Analytics Overview</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="h-80 flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg border-2 border-dashed border-gray-200">
+                <div className="text-center">
+                  <TrendingUp className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <p className="text-muted-foreground">
+                    Chart component will be integrated here
+                  </p>
+                  <p className="text-sm text-muted-foreground mt-2">
+                    Connect your backend API to display real-time analytics
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        {/* Recent Activity */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          <RecentActivity />
+        </motion.div>
+      </div>
+
+      {/* Additional Cards */}
+      <div className="grid gap-6 md:grid-cols-2">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          <Card>
+            <CardHeader>
+              <CardTitle>System Health</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium">CPU Usage</span>
+                  <span className="text-sm text-muted-foreground">23%</span>
+                </div>
+                <div className="w-full bg-secondary rounded-full h-2">
+                  <div className="bg-green-500 h-2 rounded-full" style={{ width: '23%' }}></div>
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium">Memory Usage</span>
+                  <span className="text-sm text-muted-foreground">67%</span>
+                </div>
+                <div className="w-full bg-secondary rounded-full h-2">
+                  <div className="bg-yellow-500 h-2 rounded-full" style={{ width: '67%' }}></div>
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium">Disk Usage</span>
+                  <span className="text-sm text-muted-foreground">45%</span>
+                </div>
+                <div className="w-full bg-secondary rounded-full h-2">
+                  <div className="bg-blue-500 h-2 rounded-full" style={{ width: '45%' }}></div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+        >
+          <Card>
+            <CardHeader>
+              <CardTitle>Quick Actions</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 gap-4">
+                <button className="p-4 text-left rounded-lg border hover:bg-accent transition-colors">
+                  <Users className="h-6 w-6 mb-2 text-blue-600" />
+                  <p className="font-medium">Manage Users</p>
+                  <p className="text-xs text-muted-foreground">Add or edit users</p>
+                </button>
+                <button className="p-4 text-left rounded-lg border hover:bg-accent transition-colors">
+                  <Database className="h-6 w-6 mb-2 text-green-600" />
+                  <p className="font-medium">Database</p>
+                  <p className="text-xs text-muted-foreground">View database stats</p>
+                </button>
+                <button className="p-4 text-left rounded-lg border hover:bg-accent transition-colors">
+                  <Activity className="h-6 w-6 mb-2 text-purple-600" />
+                  <p className="font-medium">Monitoring</p>
+                  <p className="text-xs text-muted-foreground">System monitoring</p>
+                </button>
+                <button className="p-4 text-left rounded-lg border hover:bg-accent transition-colors">
+                  <TrendingUp className="h-6 w-6 mb-2 text-orange-600" />
+                  <p className="font-medium">Analytics</p>
+                  <p className="text-xs text-muted-foreground">View detailed reports</p>
+                </button>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </div>
     </div>
-  );
+  )
 }
